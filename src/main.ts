@@ -29,7 +29,12 @@ export default class LocalImagesPlugin extends Plugin {
     // const content = await this.app.vault.read(file);
     const content = await this.app.vault.cachedRead(file);
 
-    await this.ensureFolderExists(this.settings.mediaRootDirectory);
+    var mediaRootDirectory = this.settings.mediaRootDirectory
+    if (mediaRootDirectory.startsWith("./") || mediaRootDirectory.startsWith("../")) {
+      mediaRootDirectory = file.parent.path + "/" + this.settings.mediaRootDirectory
+    }
+
+    await this.ensureFolderExists(mediaRootDirectory);
 
     const cleanedContent = this.settings.cleanContent
       ? cleanContent(content)
@@ -37,7 +42,7 @@ export default class LocalImagesPlugin extends Plugin {
     const fixedContent = await replaceAsync(
       cleanedContent,
       EXTERNAL_MEDIA_LINK_PATTERN,
-      imageTagProcessor(this.app, this.settings.mediaRootDirectory)
+      imageTagProcessor(this.app, mediaRootDirectory)
     );
 
     if (content != fixedContent) {
