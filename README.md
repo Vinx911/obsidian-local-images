@@ -1,3 +1,8 @@
+
+**支持媒体文件保存到当前文件所在目录的子目录，"./"或者"../"开头的路径表示以当前文件为基准的相对路径**
+**如果当前文件在"vault/folder"中，设置Media folder为"./media"，则媒体文件保存在"vault/folder/media"路径下**
+**如果当前文件在"vault/folder"中，设置Media folder为"../media"，则媒体文件保存在"vault/media"路径下**
+
 # Obsidian Local Images
 
 **This plugin is still young, backups are a good idea.**
